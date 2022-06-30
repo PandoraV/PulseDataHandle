@@ -1,7 +1,8 @@
 clc;
-clear
+clear;
 
 I_origin = csvread('data/F0002CH2.CSV', 0, 4, [0, 4, 2499, 4]);
+U_origin = csvread('data/F0002CH1.CSV', 0, 4, [0, 4, 2499, 4]);
 
 t = linspace(0,2500,2500);
 
