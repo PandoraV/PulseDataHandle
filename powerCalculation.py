@@ -22,7 +22,8 @@ with open(path_current, mode='r') as f:
     f.close()
 
 # %%
-import statsmodels.api as sm
+import statsmodels.api as sm 
+# pip install -i https://pypi.tuna.tsinghua.edu.cn/simple scipy==1.2.1 --upgrade
 lowess = sm.nonparametric.lowess
 import matplotlib.pyplot as plt
 
@@ -44,5 +45,29 @@ ax2.set_ylabel('current', color='b')
 plt.legend()
 plt.show()
 
+
+# %%
+power_origin = np.array([], dtype=np.float64)
+for i in range(2500):
+    temp_power = y_voltage_origin[i] * y_current_origin[i]
+    power_origin = np.append(power_origin, temp_power)
+
+# %%
+plt.figure()
+plt.plot(x, power_origin)
+plt.legend()
+plt.show()
+
+# %%
+power_handled = np.array([], dtype=np.float64)
+for i in range(2500):
+    temp_power = y_voltage_handled[i] * y_current_handled[i]
+    power_handled = np.append(power_handled, temp_power)
+
+# %%
+plt.figure()
+plt.plot(x, power_handled)
+plt.legend()
+plt.show()
 
 # %%
