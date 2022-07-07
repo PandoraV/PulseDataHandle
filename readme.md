@@ -4,6 +4,7 @@
 | ---       | ---      | --- |
 |2022-06-23 | v0.1      |初始版本|
 |2022-07-08 | v0.2      |使用Python进行文件批处理并加入Python计算与绘图|
+|2022-07-08 | v0.3      |新增FAQ|
 
 ## 文件构成
 
@@ -19,6 +20,36 @@ MATLAB使用的滤波算法是`rlowess`，Python使用的是`numpy`库带的`low
 
 - MATLAB窗宽为`30`
 
-- Python中`frac`参数取`0.015`
+- Python中`frac`参数取`0.015`，多项式拟合阶数为`3`
 
+
+---
+
+## FAQ
+
+* 在导入lowess计算包的时候报错：
+
+```
+ImportError: cannot import name 'factorial' from 'scipy.misc'
+```
+
+往往是因为版本不兼容引起的，需要降级，在`terminal`内操作。
+
+```
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple scipy==1.2.1 --upgrade
+```
+
+Ref: [mumujunV5的博客-CSDN博客](https://blog.csdn.net/youruolinmc/article/details/104548407/)
+
+* `numpy`包的`savetxt`函数报错：
+
+```
+Mismatch between array dtype ('＜U40') and format specifier ('%.18e')
+```
+
+解决方案为在`numpy.savetxt()`函数中增加参数`fmt='%s'`，示例：
+
+```python
+np.savetxt("file.csv", staticData, delimiter=',', fmt='%s')
+```
 
