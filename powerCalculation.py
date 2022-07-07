@@ -71,3 +71,24 @@ plt.legend()
 plt.show()
 
 # %%
+# 离散功率求和
+total_power_origin = 0
+total_power_handled = 0
+for i in range(2500):
+    total_power_origin += power_origin[i]
+    total_power_handled += power_handled[i]
+
+# print("total power (handled) is %f" % total_power_handled)
+# print("total power (origin) is %f" % total_power_origin)
+
+# %%
+# 功率换算（乘以单位时间）
+
+sample_interval = 2e-8 # 本例中最小时间尺度为20ns
+total_power_origin *= sample_interval
+total_power_handled *= sample_interval
+
+print("total power (handled) is %f" % total_power_handled)
+print("total power (origin) is %f" % total_power_origin)
+
+# %%
