@@ -53,3 +53,5 @@ Mismatch between array dtype ('＜U40') and format specifier ('%.18e')
 np.savetxt("file.csv", staticData, delimiter=',', fmt='%s')
 ```
 
+Ref: [王大渣的博客-CSDN博客](https://blog.csdn.net/qq_41221841/article/details/109571665)
+
