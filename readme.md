@@ -14,6 +14,12 @@
 
 - `powerCalculation`: 从`OUTPUT.CSV`中提取电压电流数据并滤波，滤波后计算原始功率和滤波后功率。 
 
+## **开始**
+
+1. 处理单个波形数据文件时，打开`dataRead.py`/`ReadData.m`，读取单个波形图并执行滤波操作，然后绘制滤波前后波形；
+
+2. 处理多个波形数据文件时，打开`pathAccess.py`/`fileProcessing.m`，执行滤波操作并整理电压电流至同一个文件；然后执行`powerCaculation.py`/`PowerCalculation.m`，对单个`OUTPUT.CSV`文件进行处理；`batchPowerCaculation`文件用以批量处理`OUTPUT.CSV`文件，并计算功率。
+
 ## 滤波算法
 
 MATLAB使用的滤波算法是`rlowess`，Python使用的是`numpy`库带的`lowess`方法。参数设置如下：
@@ -21,7 +27,6 @@ MATLAB使用的滤波算法是`rlowess`，Python使用的是`numpy`库带的`low
 - MATLAB窗宽为`30`
 
 - Python中`frac`参数取`0.015`，多项式拟合阶数为`3`
-
 
 ---
 
@@ -55,3 +60,6 @@ np.savetxt("file.csv", staticData, delimiter=',', fmt='%s')
 
 Ref: [王大渣的博客-CSDN博客](https://blog.csdn.net/qq_41221841/article/details/109571665)
 
+* `CSV`文件读取相关错误：
+
+请注意处理多文件的时候务必符合文件命名要求和路径要求。
