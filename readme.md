@@ -12,7 +12,7 @@
 
 - `pathAccess`: 遍历指定目录下的`CSV`文件并读取其中文本数据，并将同一文件夹下的电压电流数据从两个`CSV`文件中分别提取出来，放进新数据集`OUTPUT.CSV`中，顺序固定为第一列为电压，第二列为电流；
 
-- `powerCalculation`: 从`OUTPUT.CSV`中提取电压电流数据并滤波，滤波后计算原始功率和滤波后功率。 
+- `powerCalculation`: 从`OUTPUT.CSV`中提取电压电流数据并滤波，滤波后计算原始功率和滤波后功率。注意，Python版本不包含从`OUTPUT.CSV`中计算的内容。
 
 ## **开始**
 
