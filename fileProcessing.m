@@ -9,8 +9,9 @@ t = linspace(0,2500,2500);
 origin_power = 0.0;
 handle_power = 0.0;
 sample_interval = 2e-5;
+T = 12.5;
 
-for j = 1:17
+for j = 1:78
     
     % 构建目录地址
     
@@ -26,11 +27,23 @@ for j = 1:17
     
     % 开始访问底下的目录
     temp_path = "data/" + directory_name + '/' + file_name + "CH1.CSV";
-    temp_origin_voltage = csvread("data/" + directory_name + '/' + file_name + "CH1.CSV", 0, 4, [0, 4, 2499, 4]);
-    temp_origin_current = csvread("data/" + directory_name + '/' + file_name + "CH2.CSV", 0, 4, [0, 4, 2499, 4]);
+
+    try
+        temp_origin_voltage = csvread("data/" + directory_name + '/' + file_name + "CH1.CSV", 0, 4, [0, 4, 2499, 4]);
+        temp_origin_current = csvread("data/" + directory_name + '/' + file_name + "CH2.CSV", 0, 4, [0, 4, 2499, 4]);
+    catch
+        % 缺少轨道
+        directory_name = "ALL00";
+        file_name = "F00";
+        a = a + 1;
+        continue;
+    end
     
     % 对数据进行滤波
-    temp_handle_voltage = smooth(temp_origin_voltage, 30, 'rlowess'); 
+    temp_handle_voltage = smooth(temp_origin_voltage, 50, 'rlowess');
+    
+    % 获取时间间隔
+    sample_interval = csvread("data/" + directory_name + '/' + file_name + "CH1.CSV", 1, 1, [1, 1, 1, 1]);
 
     % 寻找过零点，第一次出现0即可
     flag = 1;
@@ -48,12 +61,18 @@ for j = 1:17
     flag = flag - 1;
     for i = 1:2000
         temp_origin_power = temp_origin_voltage(flag + i, 1) * temp_origin_current(flag + i, 1);
+        % if temp_origin_power < 0
+        %     temp_origin_power = temp_origin_power * -1;
+        % end
         origin_power = origin_power + temp_origin_power;
         temp_handle_power = temp_handle_voltage(flag + i, 1) * temp_origin_current(flag + i, 1);
+        % if temp_handle_power < 0
+        %     temp_handle_power = temp_handle_power * -1;
+        % end
         handle_power = handle_power + temp_handle_power;
     end
-    origin_power = origin_power * 25 * sample_interval; % 因为算了两个周期
-    handle_power = handle_power * 25 * sample_interval;
+    origin_power = origin_power * T * sample_interval; % 因为算了两个周期
+    handle_power = handle_power * T * sample_interval;
     origin_power = origin_power * 4501 / 100; % 缩放比例
     handle_power = handle_power * 4501 / 100;
     
